@@ -8,7 +8,6 @@ const serviceProviderCltr=require('./app/controllers/serviceProviderCltr')
 const customerCltr=require('./app/controllers/customerCltr')
 const bookingCltr=require('./app/controllers/BookingCltr')
 const serviceCltr=require('./app/controllers/serviceCltr')
-const reviewcltr=require('./app/controllers/reviewCltr')
 const paymentsCntrl = require('./app/controllers/PaymentCltr')
 
 
@@ -22,7 +21,6 @@ const {otpValidationSchema,forgotEmailValidationSchema}=require('./app/validatio
 const {serviceProviderValidation,serviceProviderUpdateValidation}=require('./app/validation/serviceProvidervalidation')
 const {customerValidation,customerUpdateValidation}=require('./app/validation/customerValidation')
 const {BookingValidationSchema,BookingUpdateSchema,BookingupdatedbyAdmin,AcceptedbyAdmin}=require('./app/validation/bookingValidation')
-const reviewValidation=require('./app/validation/reviewValidation')
 const {serviceValidationSchema,adminUpdate}=require('./app/validation/serviceValidation')
 
 const upload=require('./app/middleware/multer')
@@ -163,17 +161,6 @@ app.get('/payment/status/:bookingId', authenticateUser, authorization(['servicep
 app.delete('/booking/:bookingId',authenticateUser,authorization(['customer','serviceprovider']),bookingCltr.delete)
 // app.get('/customer-history/:customerId/history',authenticateUser,authorization(["customer"]),bookingCltr.CustomerHistory)
 app.get('/customer-history/:customerId/history', bookingCltr.CustomerHistory);
-
-
-
-// // //Review
-// app.post('/review/provider/:providerId',authenticateUser,authorization(['customer']),checkSchema(reviewValidation),reviewcltr.create)
-// app.put('/review/provider/:providerId/review/:reviewId',authenticateUser,authorization(['customer']),checkSchema(reviewValidation),reviewcltr.update)
-// app.get('/review/provider/:providerId/review/:reviewId',authenticateUser,authorization(['customer','admin']),reviewcltr.single)
-// app.get('/review/provider/:providerId',authenticateUser,authorization(['customer','admin']),reviewcltr.particularProvider)
-// app.get('/review', reviewcltr.all)
-// app.delete('/review/provider/:providerId/review/:reviewId',authenticateUser,authorization(['customer',]),reviewcltr.delete)
-
 
 app.post('/api/create-checkout-session',authenticateUser,paymentsCntrl.pay)
 app.put('/api/payment/status/update/:id' , paymentsCntrl.successUpdate)
